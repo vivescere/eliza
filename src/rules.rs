@@ -54,6 +54,7 @@ pub struct Decomposition {
     pub reasmb: Vec<String>,
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 
