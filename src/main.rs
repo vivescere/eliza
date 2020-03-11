@@ -36,7 +36,7 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 
-/// Prompts the user for a line of text, and returns it, trimmed.
+/// Prompts the user for a line of text, and returns it.
 fn prompt(prompt: &str) -> io::Result<Option<String>> {
     print!("{}", prompt);
     io::stdout().flush()?;
@@ -45,6 +45,6 @@ fn prompt(prompt: &str) -> io::Result<Option<String>> {
 
     match io::stdin().read_line(&mut input)? {
         0 => Ok(None),
-        _ => Ok(Some(input.trim().to_string())),
+        _ => Ok(Some(input.to_string())),
     }
 }
