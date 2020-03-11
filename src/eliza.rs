@@ -20,9 +20,8 @@ impl Eliza {
 
     pub fn interact(&self, input: &str) -> Response {
         let input = input.trim().to_lowercase();
-        let words: Vec<&str> = input.split(" ").collect();
 
-        if words.len() == 1 && self.rules.quit.iter().any(|w| w == words[0]) {
+        if self.rules.quit.contains(&input) {
             let message = self
                 .rules
                 .final_
