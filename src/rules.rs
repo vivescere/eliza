@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use std::{fs, io};
+use std::{cmp::Reverse, fs, io};
 
 #[derive(Debug, Deserialize)]
 pub struct Rules {
@@ -16,6 +16,10 @@ pub struct Rules {
 }
 
 impl Rules {
+    pub fn sort_keywords_by_reverse_weight(&mut self) {
+        self.keywords.sort_by_key(|k| Reverse(k.weight));
+    }
+
     pub fn from_json_file(fname: &str) -> io::Result<Self> {
         let contents = fs::read_to_string(fname)?;
         Ok(serde_json::from_str(&contents).unwrap())
@@ -48,4 +52,46 @@ pub struct Keyword {
 pub struct Decomposition {
     pub pattern: String,
     pub reasmb: Vec<String>,
+}
+
+mod tests {
+    use super::*;
+
+    #[test]
+    pub fn test_keywords_by_reverse_weight() {
+        let keywords = vec![
+            Keyword {
+                word: "".to_string(),
+                weight: 0,
+                decomposition: vec![],
+            },
+            Keyword {
+                word: "".to_string(),
+                weight: 2,
+                decomposition: vec![],
+            },
+            Keyword {
+                word: "".to_string(),
+                weight: 1,
+                decomposition: vec![],
+            },
+        ];
+
+        let mut rules = Rules {
+            initial: vec![],
+            final_: vec![],
+            quit: vec![],
+            pre: vec![],
+            post: vec![],
+            synonyms: vec![],
+            keywords,
+        };
+
+        rules.sort_keywords_by_reverse_weight();
+
+        let result: Vec<u8> = rules.keywords.iter().map(|k| k.weight).collect();
+        let expected = vec![2, 1, 0];
+
+        assert_eq!(expected, result);
+    }
 }
