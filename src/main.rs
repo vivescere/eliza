@@ -6,6 +6,7 @@ use std::{
 };
 
 mod eliza;
+mod pattern;
 mod rules;
 
 fn main() -> io::Result<()> {
