@@ -22,8 +22,15 @@ fn main() -> io::Result<()> {
     let rules = rules::Rules::from_json_file(&filename)?;
     let eliza = Eliza::new(rules);
 
+    println!("{}", eliza.greeting());
+
     while let Some(input) = prompt("> ")? {
-        println!("Typed: {}", input);
+        let response = eliza.interact(&input);
+        println!("{}", response.message);
+
+        if response.is_farewell {
+            break;
+        }
     }
 
     Ok(())
