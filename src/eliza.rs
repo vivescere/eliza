@@ -1,4 +1,5 @@
 use crate::rules::Rules;
+use rand::seq::SliceRandom;
 
 pub struct Eliza {
     rules: Rules,
@@ -11,7 +12,10 @@ impl Eliza {
     }
 
     pub fn greeting(&self) -> &str {
-        "GREETINGS"
+        self.rules
+            .initial
+            .choose(&mut rand::thread_rng())
+            .expect("initial rules should have at least one item")
     }
 
     pub fn interact(&self, input: &str) -> Response {
