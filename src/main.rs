@@ -1,5 +1,9 @@
 use eliza::Eliza;
-use std::{env, io, process};
+use std::{
+    env,
+    io::{self, Write},
+    process,
+};
 
 mod eliza;
 mod rules;
@@ -18,5 +22,22 @@ fn main() -> io::Result<()> {
     let rules = rules::Rules::from_json_file(&filename)?;
     let eliza = Eliza::new(rules);
 
+    while let Some(input) = prompt("> ")? {
+        println!("Typed: {}", input);
+    }
+
     Ok(())
+}
+
+/// Prompts the user for a line of text, and returns it, trimmed.
+fn prompt(prompt: &str) -> io::Result<Option<String>> {
+    print!("{}", prompt);
+    io::stdout().flush()?;
+
+    let mut input = String::new();
+
+    match io::stdin().read_line(&mut input)? {
+        0 => Ok(None),
+        _ => Ok(Some(input.trim().to_string())),
+    }
 }
