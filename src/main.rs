@@ -1,5 +1,7 @@
+use eliza::Eliza;
 use std::{env, io, process};
 
+mod eliza;
 mod rules;
 
 fn main() -> io::Result<()> {
@@ -13,7 +15,8 @@ fn main() -> io::Result<()> {
         }
     };
 
-    let rules = rules::Rules::from_json_file(&filename);
-    println!("{:?}", rules);
+    let rules = rules::Rules::from_json_file(&filename)?;
+    let eliza = Eliza::new(rules);
+
     Ok(())
 }
