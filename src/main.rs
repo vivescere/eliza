@@ -1,6 +1,7 @@
 use eliza::Eliza;
+use rules::Rules;
 use std::{
-    env,
+    env, fs,
     io::{self, Write},
     process,
 };
@@ -20,7 +21,8 @@ fn main() -> io::Result<()> {
         }
     };
 
-    let rules = rules::Rules::from_json_file(&filename)?;
+    let rule_contents = fs::read_to_string(&filename)?;
+    let rules: Rules = serde_json::from_str(&rule_contents).expect("Could not parse JSON file.");
     let eliza = Eliza::new(rules);
 
     println!("{}", eliza.greeting());

@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use std::{cmp::Reverse, fs, io};
+use std::cmp::Reverse;
 
 #[derive(Debug, Deserialize)]
 pub struct Rules {
@@ -18,11 +18,6 @@ pub struct Rules {
 impl Rules {
     pub fn sort_keywords_by_reverse_weight(&mut self) {
         self.keywords.sort_by_key(|k| Reverse(k.weight));
-    }
-
-    pub fn from_json_file(fname: &str) -> io::Result<Self> {
-        let contents = fs::read_to_string(fname)?;
-        Ok(serde_json::from_str(&contents).unwrap())
     }
 }
 
