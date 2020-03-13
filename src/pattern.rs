@@ -4,7 +4,7 @@ use crate::rules::Synonym;
 ///
 /// This implementation supports stars, and synonyms. A synonym must start
 /// with an '@'.
-fn match_pattern<'a>(
+pub fn match_pattern<'a>(
     pattern: &str,
     input: &'a str,
     synonyms: &Vec<Synonym>,
