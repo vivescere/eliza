@@ -11,6 +11,8 @@ mod pattern;
 mod rules;
 
 fn main() -> io::Result<()> {
+    dotenv::dotenv().ok();
+
     let args: Vec<String> = env::args().collect();
 
     let filename = match args.len() {
