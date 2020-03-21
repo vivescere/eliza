@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::cmp::Reverse;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Rules {
     pub initial: Vec<String>,
     #[serde(rename = "final")]
@@ -21,7 +21,7 @@ impl Rules {
     }
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Replacement {
     #[serde(rename = "in")]
     pub from: String,
@@ -29,13 +29,13 @@ pub struct Replacement {
     pub to: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Synonym {
     pub label: String,
     pub list: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Keyword {
     pub word: String,
     pub weight: u8,
@@ -43,7 +43,7 @@ pub struct Keyword {
     pub decomposition: Vec<Decomposition>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Decomposition {
     pub pattern: String,
     pub reasmb: Vec<String>,
